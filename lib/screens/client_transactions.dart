@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mybusiness/models/client_modal.dart';
 import 'package:mybusiness/screens/components.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:intl/intl.dart';
 
 class ClientTransactions extends StatelessWidget {
   final String clientDocId;
@@ -110,6 +111,8 @@ class ClientTransactions extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  subtitle: Text(
+                      '${DateFormat().format((client.transactions[index]['time'] as Timestamp).toDate())}'),
                   trailing: Text(
                     '${client.transactions[index]['credit'] ? "+" : "-"} ₹ ${client.transactions[index]['amount']}',
                     style: TextStyle(
