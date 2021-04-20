@@ -5,6 +5,7 @@ import 'package:mybusiness/models/client_modal.dart';
 import 'package:mybusiness/screens/add_client.dart';
 import 'package:mybusiness/screens/client_transactions.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:intl/intl.dart';
 
 class ClientsScreen extends StatelessWidget {
   @override
@@ -42,20 +43,39 @@ class ClientsScreen extends StatelessWidget {
               ),
               shrinkWrap: true,
               itemCount: clients.length,
-              itemBuilder: (context, index) => OpenContainer(
+              itemBuilder: (context, index) {
+                int balance = 0;
+                clients[index].transactions.forEach((element) {
+                  if (element['credit'])
+                    balance += element['amount'] as int;
+                  else
+                    balance -= element['amount'] as int;
+                });
+                return OpenContainer(
                   openElevation: 0,
                   closedElevation: 0,
                   openColor: context.canvasColor,
                   closedColor: context.canvasColor,
                   closedBuilder: (context, action) => ListTile(
-                        leading: CircleAvatar(
-                          child: clients[index].name[0].text.make(),
-                        ),
-                        title: clients[index].name.text.make(),
-                      ),
+                    leading: CircleAvatar(
+                      child: clients[index].name[0].text.make(),
+                    ),
+                    trailing: "₹ $balance"
+                        .text
+                        .size(16)
+                        .color((balance < 0 ? Colors.red : Colors.green))
+                        .make(),
+                    title: clients[index].name.text.make(),
+                    subtitle:
+                        "${DateFormat().format(clients[index].createdAt.toDate())}"
+                            .text
+                            .make(),
+                  ),
                   openBuilder: (context, action) => ClientTransactions(
-                        clientDocId: clients[index].name,
-                      )),
+                    clientDocId: clients[index].name,
+                  ),
+                );
+              },
             ).pOnly(top: 5);
           }
           return SizedBox(
