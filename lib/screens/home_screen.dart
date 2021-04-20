@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mybusiness/screens/clients_screen.dart';
+import 'package:mybusiness/screens/clients_side/clients_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeScreen extends StatefulWidget {

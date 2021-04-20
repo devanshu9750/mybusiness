@@ -2,8 +2,8 @@ import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mybusiness/models/client_modal.dart';
-import 'package:mybusiness/screens/add_client.dart';
-import 'package:mybusiness/screens/client_transactions.dart';
+import 'package:mybusiness/screens/clients_side/add_client.dart';
+import 'package:mybusiness/screens/clients_side/client_transactions.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
 
