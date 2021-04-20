@@ -62,6 +62,7 @@ class ClientsScreen extends StatelessWidget {
                     ),
                     trailing: "₹ $balance"
                         .text
+                        .bold
                         .size(16)
                         .color((balance < 0 ? Colors.red : Colors.green))
                         .make(),
