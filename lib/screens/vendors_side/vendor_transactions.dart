@@ -134,13 +134,32 @@ class VendorTransactions extends StatelessWidget {
                             child: Text("Cancel")),
                         TextButton(
                             onPressed: () {
-                              vendor.transactions.removeAt(index);
-                              FirebaseFirestore.instance
-                                  .collection('vendors')
-                                  .doc(vendorDocId)
-                                  .update(
-                                      {'transactions': vendor.transactions});
-                              context.pop();
+                              showModal(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('Are you sure ?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => context.pop(),
+                                      child: Text('No'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        vendor.transactions.removeAt(index);
+                                        FirebaseFirestore.instance
+                                            .collection('vendors')
+                                            .doc(vendorDocId)
+                                            .update({
+                                          'transactions': vendor.transactions
+                                        });
+                                        context.pop();
+                                        context.pop();
+                                      },
+                                      child: Text('Yes'),
+                                    )
+                                  ],
+                                ),
+                              );
                             },
                             child: Text("Delete")),
                         TextButton(
