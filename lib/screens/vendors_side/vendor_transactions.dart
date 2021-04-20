@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mybusiness/models/vendor_modal.dart';
 import 'package:mybusiness/screens/components.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -123,10 +124,119 @@ class VendorTransactions extends StatelessWidget {
                             : Colors.red),
                   ),
                 ).onInkLongPress(() {
-                  // TODO: Add edit and delete transaction options
                   showModal(
                     context: context,
-                    builder: (context) => AlertDialog(),
+                    builder: (context) => AlertDialog(
+                      title: Text('What would you like to do ?'),
+                      actions: [
+                        TextButton(
+                            onPressed: () => context.pop(),
+                            child: Text("Cancel")),
+                        TextButton(
+                            onPressed: () {
+                              vendor.transactions.removeAt(index);
+                              FirebaseFirestore.instance
+                                  .collection('vendors')
+                                  .doc(vendorDocId)
+                                  .update(
+                                      {'transactions': vendor.transactions});
+                              context.pop();
+                            },
+                            child: Text("Delete")),
+                        TextButton(
+                            onPressed: () {
+                              String _amount = vendor.transactions[index]
+                                          ['amount']
+                                      .toString(),
+                                  _message =
+                                      vendor.transactions[index]['message'];
+                              context.pop();
+                              showModal(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => context.pop(),
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        if (_amount.isNotBlank)
+                                          showModal(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title: Text('Are you sure ?'),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () =>
+                                                        context.pop(),
+                                                    child: Text('No')),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      vendor.transactions[index]
+                                                              ['amount'] =
+                                                          int.parse(_amount);
+                                                      vendor.transactions[index]
+                                                              ['message'] =
+                                                          _message;
+                                                      FirebaseFirestore.instance
+                                                          .collection('vendors')
+                                                          .doc(vendorDocId)
+                                                          .update({
+                                                        'transactions':
+                                                            vendor.transactions
+                                                      });
+                                                      context.pop();
+                                                      context.pop();
+                                                    },
+                                                    child: Text('Yes'))
+                                              ],
+                                            ),
+                                          );
+                                        else
+                                          Fluttertoast.showToast(
+                                              msg: 'Amount cannot be empty');
+                                      },
+                                      child: Text("Save"),
+                                    )
+                                  ],
+                                  title: Text('Edit'),
+                                  content: VStack([
+                                    Text('Amount *'),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    VxTextField(
+                                      value: _amount,
+                                      keyboardType: TextInputType.number,
+                                      borderRadius: 10,
+                                      borderType:
+                                          VxTextFieldBorderType.roundLine,
+                                      onChanged: (value) =>
+                                          _amount = value.trim(),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text('Message'),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    VxTextField(
+                                      value: _message,
+                                      borderRadius: 10,
+                                      borderType:
+                                          VxTextFieldBorderType.roundLine,
+                                      onChanged: (value) =>
+                                          _message = value.trim(),
+                                    )
+                                  ]),
+                                ),
+                              );
+                            },
+                            child: Text("Edit"))
+                      ],
+                    ),
                   );
                 }),
               ).pOnly(top: 5);
