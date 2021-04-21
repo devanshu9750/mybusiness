@@ -79,7 +79,7 @@ class _AddClientState extends State<AddClient> {
         SizedBox(
           height: 10,
         ),
-        "Email".text.make(),
+        "Email".text.size(16).make(),
         SizedBox(
           height: 10,
         ),
@@ -93,7 +93,7 @@ class _AddClientState extends State<AddClient> {
         SizedBox(
           height: 10,
         ),
-        "Address".text.make(),
+        "Address".text.size(16).make(),
         SizedBox(
           height: 10,
         ),
