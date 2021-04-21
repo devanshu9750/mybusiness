@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> _moduleTitles = ['Clients', 'Vendors', 'Inventory'];
+  final List<String> _moduleTitles = ['Clients', 'Vendors', 'Products'];
   final List<Widget> _moduleWidgets = [
     ClientsScreen(),
     VendorScreen(),
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
             ListTile(
               leading: Icon(Icons.inventory),
-              title: "Inventory".text.size(16).make(),
+              title: "Products".text.size(16).make(),
               trailing: IconButton(
                   icon: Icon(Icons.add_circle_outline),
                   onPressed: () {
