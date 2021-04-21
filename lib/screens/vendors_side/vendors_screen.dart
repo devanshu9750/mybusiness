@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mybusiness/models/vendor_modal.dart';
+import 'package:mybusiness/models/vendor_model.dart';
 import 'package:mybusiness/screens/vendors_side/add_vendor.dart';
 import 'package:mybusiness/screens/vendors_side/vendor_transactions.dart';
 import 'package:velocity_x/velocity_x.dart';
