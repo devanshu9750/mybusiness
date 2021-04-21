@@ -48,7 +48,7 @@ class _AddVendorState extends State<AddVendor> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addVendor(),
-        child: Icon(Icons.add),
+        child: Icon(Icons.check),
       ),
       body: VStack([
         "Name *".text.size(16).make(),
@@ -79,7 +79,7 @@ class _AddVendorState extends State<AddVendor> {
         SizedBox(
           height: 10,
         ),
-        "Email".text.make(),
+        "Email".text.size(16).make(),
         SizedBox(
           height: 10,
         ),
@@ -93,7 +93,7 @@ class _AddVendorState extends State<AddVendor> {
         SizedBox(
           height: 10,
         ),
-        "Address".text.make(),
+        "Address".text.size(16).make(),
         SizedBox(
           height: 10,
         ),
@@ -104,7 +104,7 @@ class _AddVendorState extends State<AddVendor> {
           hint: "Address",
           onChanged: (value) => _address = value,
         )
-      ]).pOnly(top: 15, right: 15, left: 15).scrollVertical(),
+      ]).scrollVertical().pOnly(top: 15, right: 15, left: 15).scrollVertical(),
     );
   }
 }

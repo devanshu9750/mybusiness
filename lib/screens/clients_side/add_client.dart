@@ -48,7 +48,7 @@ class _AddClientState extends State<AddClient> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addClient(),
-        child: Icon(Icons.add),
+        child: Icon(Icons.check),
       ),
       body: VStack([
         "Name".text.size(16).make(),
@@ -104,7 +104,7 @@ class _AddClientState extends State<AddClient> {
           hint: "Address",
           onChanged: (value) => _address = value,
         )
-      ]).pOnly(top: 15, right: 15, left: 15).scrollVertical(),
+      ]).scrollVertical().pOnly(top: 15, right: 15, left: 15).scrollVertical(),
     );
   }
 }
