@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mybusiness/screens/clients_side/add_client.dart';
 import 'package:mybusiness/screens/clients_side/clients_screen.dart';
+import 'package:mybusiness/screens/inventory/add_inventory.dart';
+import 'package:mybusiness/screens/inventory/inventory_screen.dart';
+import 'package:mybusiness/screens/vendors_side/add_vendor.dart';
 import 'package:mybusiness/screens/vendors_side/vendors_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -9,15 +13,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> _moduleTitles = ['Clients', 'Vendors'];
-  final List<Widget> _moduleWidgets = [ClientsScreen(), VendorScreen()];
-  int _index = 1;
+  final List<String> _moduleTitles = ['Clients', 'Vendors', 'Inventory'];
+  final List<Widget> _moduleWidgets = [
+    ClientsScreen(),
+    VendorScreen(),
+    InventoryScreen()
+  ];
+  int _index = 0;
 
   Widget get _drawer => Drawer(
         child: SafeArea(
           child: VStack([
             SizedBox(
-              height: 50,
+              height: 20,
             ),
             Divider(
               thickness: 2,
@@ -25,6 +33,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               leading: Icon(Icons.account_circle),
               title: "Clients".text.size(16).make(),
+              trailing: IconButton(
+                  icon: Icon(Icons.add_circle_outline),
+                  onPressed: () {
+                    context.pop();
+                    setState(() {
+                      _index = 0;
+                    });
+                    context.push((context) => AddClient());
+                  }),
             ).onInkTap(() {
               context.pop();
               setState(() {
@@ -34,10 +51,37 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               leading: Icon(Icons.shopping_bag_rounded),
               title: "Vendors".text.size(16).make(),
+              trailing: IconButton(
+                  icon: Icon(Icons.add_circle_outline),
+                  onPressed: () {
+                    context.pop();
+                    setState(() {
+                      _index = 1;
+                    });
+                    context.push((context) => AddVendor());
+                  }),
             ).onInkTap(() {
               context.pop();
               setState(() {
                 _index = 1;
+              });
+            }),
+            ListTile(
+              leading: Icon(Icons.inventory),
+              title: "Inventory".text.size(16).make(),
+              trailing: IconButton(
+                  icon: Icon(Icons.add_circle_outline),
+                  onPressed: () {
+                    context.pop();
+                    setState(() {
+                      _index = 2;
+                    });
+                    context.push((context) => AddInventory());
+                  }),
+            ).onInkTap(() {
+              context.pop();
+              setState(() {
+                _index = 2;
               });
             })
           ]),
@@ -53,6 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: _drawer,
       body: _moduleWidgets[_index],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (_index == 0) context.push((context) => AddClient());
+          if (_index == 1) context.push((context) => AddVendor());
+          if (_index == 2) context.push((context) => AddInventory());
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
