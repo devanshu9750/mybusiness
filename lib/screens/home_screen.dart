@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mybusiness/screens/clients_side/add_client.dart';
 import 'package:mybusiness/screens/clients_side/clients_screen.dart';
-import 'package:mybusiness/screens/inventory/add_inventory.dart';
-import 'package:mybusiness/screens/inventory/inventory_screen.dart';
+import 'package:mybusiness/screens/products_side/add_product.dart';
+import 'package:mybusiness/screens/products_side/products_screen.dart';
 import 'package:mybusiness/screens/vendors_side/add_vendor.dart';
 import 'package:mybusiness/screens/vendors_side/vendors_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _moduleWidgets = [
     ClientsScreen(),
     VendorScreen(),
-    InventoryScreen()
+    ProductsScreen()
   ];
   int _index = 0;
 
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       _index = 2;
                     });
-                    context.push((context) => AddInventory());
+                    context.push((context) => AddProduct());
                   }),
             ).onInkTap(() {
               context.pop();
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           if (_index == 0) context.push((context) => AddClient());
           if (_index == 1) context.push((context) => AddVendor());
-          if (_index == 2) context.push((context) => AddInventory());
+          if (_index == 2) context.push((context) => AddProduct());
         },
         child: Icon(Icons.add),
       ),
