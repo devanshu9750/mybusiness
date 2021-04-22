@@ -15,7 +15,7 @@ class _AddClientState extends State<AddClient> {
 
   _addClient() {
     if (_name.isNotBlank) {
-      if (_phoneNumber.length != 10) {
+      if (_phoneNumber.length < 10) {
         Fluttertoast.showToast(msg: 'Phone Number is Invalid');
         return;
       }
@@ -51,7 +51,7 @@ class _AddClientState extends State<AddClient> {
         child: Icon(Icons.check),
       ),
       body: VStack([
-        "Name".text.size(16).make(),
+        "Name *".text.size(16).make(),
         SizedBox(
           height: 10,
         ),
@@ -65,7 +65,7 @@ class _AddClientState extends State<AddClient> {
         SizedBox(
           height: 10,
         ),
-        "Phone Number".text.size(16).make(),
+        "Phone Number *".text.size(16).make(),
         SizedBox(
           height: 10,
         ),
