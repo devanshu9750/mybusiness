@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mybusiness/models/client_model.dart';
+import 'package:mybusiness/screens/clients_side/edit_client.dart';
 import 'package:mybusiness/screens/components.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
@@ -84,7 +85,13 @@ class ClientTransactions extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: clientDocId.text.make(),
-        actions: [IconButton(icon: Icon(Icons.edit), onPressed: () {})],
+        actions: [
+          IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                context.push((context) => EditClient(clientDocId: clientDocId));
+              })
+        ],
       ),
       body: ZStack([
         StreamBuilder<DocumentSnapshot>(
@@ -123,7 +130,9 @@ class ClientTransactions extends StatelessWidget {
                             ? Colors.green
                             : Colors.red),
                   ),
-                ).onInkLongPress(() {
+                ).onInkTap(() {
+                  Fluttertoast.showToast(msg: "Long Press to see options");
+                }).onInkLongPress(() {
                   showModal(
                     context: context,
                     builder: (context) => AlertDialog(
