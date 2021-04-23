@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mybusiness/screens/clients_side/add_client.dart';
 import 'package:mybusiness/screens/clients_side/clients_screen.dart';
 import 'package:mybusiness/screens/products_side/add_product.dart';
 import 'package:mybusiness/screens/products_side/products_screen.dart';
+import 'package:mybusiness/screens/search.dart';
 import 'package:mybusiness/screens/vendors_side/add_vendor.dart';
 import 'package:mybusiness/screens/vendors_side/vendors_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -94,6 +96,20 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: _moduleTitles[_index].text.make(),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                if (_index == 0)
+                  FirebaseFirestore.instance
+                      .collection('clients')
+                      .get()
+                      .then((value) {
+                    ClientSearch.data = value.docs;
+                    showSearch(context: context, delegate: ClientSearch());
+                  });
+              })
+        ],
       ),
       drawer: _drawer,
       body: _moduleWidgets[_index],
