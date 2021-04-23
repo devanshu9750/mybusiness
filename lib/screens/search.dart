@@ -69,7 +69,7 @@ class ClientSearch extends SearchDelegate<String> {
             child: clients[index].name[0].text.make(),
           ),
           title: clients[index].name.text.make(),
-          subtitle: "${DateFormat().format(clients[index].createdAt.toDate())}"
+          subtitle: "${DateFormat().format(clients[index].editedAt.toDate())}"
               .text
               .make(),
         ).onInkTap(() {

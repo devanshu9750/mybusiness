@@ -25,6 +25,7 @@ class _AddClientState extends State<AddClient> {
           name: _name,
           phoneNumber: _phoneNumber,
           transactions: [],
+          editedAt: Timestamp.now(),
           createdAt: Timestamp.now());
       Components.showLoading(context);
       FirebaseFirestore.instance

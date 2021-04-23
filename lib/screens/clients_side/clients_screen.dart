@@ -10,7 +10,10 @@ class ClientsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('clients').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('clients')
+          .orderBy('editedAt', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           List<Client> clients = [];
@@ -41,13 +44,13 @@ class ClientsScreen extends StatelessWidget {
                   ),
                   trailing: "₹ $balance"
                       .text
-                      .bold
-                      .size(16)
+                      .semiBold
+                      .size(18)
                       .color((balance < 0 ? Colors.red : Colors.green))
                       .make(),
-                  title: clients[index].name.text.make(),
+                  title: clients[index].name.text.semiBold.size(16).make(),
                   subtitle:
-                      "${DateFormat().format(clients[index].createdAt.toDate())}"
+                      "${DateFormat().format(clients[index].editedAt.toDate())}"
                           .text
                           .make(),
                 ),

@@ -43,7 +43,10 @@ class ClientTransactions extends StatelessWidget {
                     FirebaseFirestore.instance
                         .collection('clients')
                         .doc(clientDocId)
-                        .update({'transactions': transactions});
+                        .update({
+                      'transactions': transactions,
+                      'editedAt': Timestamp.now()
+                    });
                   });
                 context.pop();
                 context.pop();
@@ -159,7 +162,8 @@ class ClientTransactions extends StatelessWidget {
                                             .collection('clients')
                                             .doc(clientDocId)
                                             .update({
-                                          'transactions': client.transactions
+                                          'transactions': client.transactions,
+                                          'editedAt': Timestamp.now()
                                         });
                                         context.pop();
                                         context.pop();
@@ -212,7 +216,9 @@ class ClientTransactions extends StatelessWidget {
                                                           .doc(clientDocId)
                                                           .update({
                                                         'transactions':
-                                                            client.transactions
+                                                            client.transactions,
+                                                        "editedAt":
+                                                            Timestamp.now()
                                                       });
                                                       context.pop();
                                                       context.pop();
