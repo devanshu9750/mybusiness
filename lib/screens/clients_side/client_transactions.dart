@@ -7,6 +7,7 @@ import 'package:mybusiness/screens/clients_side/edit_client.dart';
 import 'package:mybusiness/screens/components.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientTransactions extends StatelessWidget {
   final String clientDocId;
@@ -85,15 +86,24 @@ class ClientTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String phoneNumber = '';
     return Scaffold(
       appBar: AppBar(
         title: clientDocId.text.make(),
         actions: [
           IconButton(
+              icon: Icon(Icons.call),
+              onPressed: () {
+                if (phoneNumber.isNotBlank)
+                  launch("tel:$phoneNumber");
+                else
+                  Fluttertoast.showToast(msg: "No phone number found");
+              }),
+          IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
                 context.push((context) => EditClient(clientDocId: clientDocId));
-              })
+              }),
         ],
       ),
       body: ZStack([
@@ -106,6 +116,7 @@ class ClientTransactions extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.active) {
               Client client = Client.fromJson(
                   snapshot.data?.data() ?? {}, snapshot.data?.id ?? '');
+              phoneNumber = client.phoneNumber;
               return ListView.separated(
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => Divider(
