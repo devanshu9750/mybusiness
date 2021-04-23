@@ -61,14 +61,14 @@ class ClientSearch extends SearchDelegate<String> {
         return ListTile(
           trailing: "₹ $balance"
               .text
-              .bold
-              .size(16)
+              .semiBold
+              .size(18)
               .color((balance < 0 ? Colors.red : Colors.green))
               .make(),
           leading: CircleAvatar(
             child: clients[index].name[0].text.make(),
           ),
-          title: clients[index].name.text.make(),
+          title: clients[index].name.text.semiBold.size(16).make(),
           subtitle: "${DateFormat().format(clients[index].editedAt.toDate())}"
               .text
               .make(),
@@ -111,15 +111,15 @@ class ClientSearch extends SearchDelegate<String> {
         return ListTile(
           trailing: "₹ $balance"
               .text
-              .bold
-              .size(16)
+              .semiBold
+              .size(18)
               .color((balance < 0 ? Colors.red : Colors.green))
               .make(),
           leading: CircleAvatar(
             child: clients[index].name[0].text.make(),
           ),
-          title: clients[index].name.text.make(),
-          subtitle: "${DateFormat().format(clients[index].createdAt.toDate())}"
+          title: clients[index].name.text.semiBold.size(16).make(),
+          subtitle: "${DateFormat().format(clients[index].editedAt.toDate())}"
               .text
               .make(),
         ).onInkTap(() {
