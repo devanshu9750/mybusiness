@@ -33,7 +33,7 @@ class ProductsScreen extends StatelessWidget {
                   ),
                   title: "${products[index].code}".text.bold.size(16).make(),
                   subtitle: (products[index].name.isNotBlank)
-                      ? "${products[index].name}".text.make()
+                      ? "${products[index].name}".text.semiBold.make()
                       : null,
                   trailing: RichText(
                       text: TextSpan(children: <TextSpan>[
