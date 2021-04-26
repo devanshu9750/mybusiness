@@ -55,7 +55,8 @@ class DashboardScreen extends StatelessWidget {
                   client.transactions.forEach((transaction) {
                     if ((transaction['time'] as Timestamp).compareTo(
                             Timestamp.fromDate(DateTime(DateTime.now().year,
-                                DateTime.now().month, 1))) >
+                                    DateTime.now().month, DateTime.now().day)
+                                .subtract(Duration(days: 30)))) >
                         0) if (transaction['credit'])
                       revenue += transaction['amount'] as int;
                   });
