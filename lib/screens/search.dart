@@ -40,7 +40,11 @@ class ClientSearch extends SearchDelegate<String> {
       });
     } else {
       data?.forEach((doc) {
-        if (doc.id.toLowerCase().contains(query.toLowerCase()))
+        if (doc.id.toLowerCase().contains(query.toLowerCase()) ||
+            doc
+                .data()['phoneNumber']
+                .toLowerCase()
+                .contains(query.toLowerCase()))
           clients.add(Client.fromJson(doc.data(), doc.id));
       });
     }
@@ -90,7 +94,11 @@ class ClientSearch extends SearchDelegate<String> {
       });
     } else {
       data?.forEach((doc) {
-        if (doc.id.toLowerCase().contains(query.toLowerCase()))
+        if (doc.id.toLowerCase().contains(query.toLowerCase()) ||
+            doc
+                .data()['phoneNumber']
+                .toLowerCase()
+                .contains(query.toLowerCase()))
           clients.add(Client.fromJson(doc.data(), doc.id));
       });
     }
@@ -130,6 +138,12 @@ class ClientSearch extends SearchDelegate<String> {
     ).pOnly(top: 5);
   }
 }
+
+//* --------------------------------------------------------------------------------------------------------------------- //
+//* --------------------------------------------------------------------------------------------------------------------- //
+//* ----------------------------------------------- Vendor Search ------------------------------------------------------- //
+//* --------------------------------------------------------------------------------------------------------------------- //
+//* --------------------------------------------------------------------------------------------------------------------- //
 
 class VendorSearch extends SearchDelegate<String> {
   static List<QueryDocumentSnapshot>? data;
