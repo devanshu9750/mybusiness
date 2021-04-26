@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mybusiness/models/client_model.dart';
+import 'package:mybusiness/models/vendor_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 // * vendors add type with gst without gst (optional)
@@ -72,6 +73,38 @@ class DashboardScreen extends StatelessWidget {
                     .text
                     .bold
                     .color(Colors.green)
+                    .size(18)
+                    .make();
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      ).p(10),
+      Card(
+        child: ListTile(
+          title: "Total Expense :".text.bold.make(),
+          subtitle: "This month".text.semiBold.make(),
+          trailing: StreamBuilder<QuerySnapshot>(
+            stream:
+                FirebaseFirestore.instance.collection('vendors').snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                int expense = 0;
+                snapshot.data?.docs.forEach((doc) {
+                  Vendor client = Vendor.fromJson(doc.data(), doc.id);
+                  client.transactions.forEach((transaction) {
+                    if ((transaction['time'] as Timestamp).compareTo(
+                            Timestamp.fromDate(DateTime(DateTime.now().year,
+                                DateTime.now().month, 1))) >
+                        0) if (!transaction['credit'])
+                      expense += transaction['amount'] as int;
+                  });
+                });
+                return '₹ -$expense'
+                    .text
+                    .bold
+                    .color(Colors.red)
                     .size(18)
                     .make();
               }
