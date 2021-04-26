@@ -33,10 +33,32 @@ class ProductsScreen extends StatelessWidget {
                   subtitle: (products[index].name.isNotBlank)
                       ? "${products[index].name}".text.make()
                       : null,
-                  trailing: "₹ ${products[index].cp} / ₹ ${products[index].sp}"
-                      .text
-                      .bold
-                      .make(),
+                  // trailing: "₹ ${products[index].cp} / ₹ ${products[index].sp}"
+                  //     .text
+                  //     .bold
+                  //     .make(),
+                  trailing: RichText(
+                      text: TextSpan(children: <TextSpan>[
+                    TextSpan(
+                      text: "₹ ${products[index].cp}",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
+                    TextSpan(
+                      text: " / ",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    TextSpan(
+                      text: "₹ ${products[index].sp}",
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    )
+                  ])),
                 ),
                 openBuilder: (context, action) =>
                     ProductDetail(productDocId: products[index].code),
