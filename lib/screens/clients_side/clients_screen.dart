@@ -40,7 +40,7 @@ class ClientsScreen extends StatelessWidget {
                 closedColor: context.canvasColor,
                 closedBuilder: (context, action) => ListTile(
                   leading: CircleAvatar(
-                    child: clients[index].name[0].text.make(),
+                    child: clients[index].name[0].text.bold.make(),
                   ),
                   trailing: "₹ $balance"
                       .text
@@ -52,6 +52,7 @@ class ClientsScreen extends StatelessWidget {
                   subtitle:
                       "${DateFormat().format(clients[index].editedAt.toDate())}"
                           .text
+                          .semiBold
                           .make(),
                 ),
                 openBuilder: (context, action) => ClientTransactions(

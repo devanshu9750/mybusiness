@@ -28,15 +28,13 @@ class ProductsScreen extends StatelessWidget {
                 closedElevation: 0,
                 openElevation: 0,
                 closedBuilder: (context, action) => ListTile(
-                  leading: CircleAvatar(),
+                  leading: CircleAvatar(
+                    child: Text("${products[index].quantity}"),
+                  ),
                   title: "${products[index].code}".text.bold.size(16).make(),
                   subtitle: (products[index].name.isNotBlank)
                       ? "${products[index].name}".text.make()
                       : null,
-                  // trailing: "₹ ${products[index].cp} / ₹ ${products[index].sp}"
-                  //     .text
-                  //     .bold
-                  //     .make(),
                   trailing: RichText(
                       text: TextSpan(children: <TextSpan>[
                     TextSpan(

@@ -38,18 +38,19 @@ class VendorScreen extends StatelessWidget {
                 closedColor: context.canvasColor,
                 closedBuilder: (context, action) => ListTile(
                   leading: CircleAvatar(
-                    child: clients[index].name[0].text.make(),
+                    child: clients[index].name[0].text.bold.make(),
                   ),
                   trailing: "₹ $balance"
                       .text
                       .bold
-                      .size(16)
+                      .size(18)
                       .color(balance < 0 ? Colors.red : Colors.green)
                       .make(),
-                  title: clients[index].name.text.make(),
+                  title: clients[index].name.text.semiBold.size(16).make(),
                   subtitle:
                       "${DateFormat().format(clients[index].createdAt.toDate())}"
                           .text
+                          .semiBold
                           .make(),
                 ),
                 openBuilder: (context, action) => VendorTransactions(
