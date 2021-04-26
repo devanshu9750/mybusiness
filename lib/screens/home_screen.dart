@@ -116,6 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     VendorSearch.data = value.docs;
                     showSearch(context: context, delegate: VendorSearch());
                   });
+                if (_index == 2)
+                  FirebaseFirestore.instance
+                      .collection('products')
+                      .get()
+                      .then((value) {
+                    ProductSearch.data = value.docs;
+                    showSearch(context: context, delegate: ProductSearch());
+                  });
               })
         ],
       ),
