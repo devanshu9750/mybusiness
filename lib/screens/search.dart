@@ -179,7 +179,11 @@ class VendorSearch extends SearchDelegate<String> {
       });
     } else {
       data?.forEach((doc) {
-        if (doc.id.toLowerCase().contains(query.toLowerCase()))
+        if (doc.id.toLowerCase().contains(query.toLowerCase()) ||
+            doc
+                .data()['phoneNumber']
+                .toLowerCase()
+                .contains(query.toLowerCase()))
           vendors.add(Vendor.fromJson(doc.data(), doc.id));
       });
     }
@@ -229,7 +233,11 @@ class VendorSearch extends SearchDelegate<String> {
       });
     } else {
       data?.forEach((doc) {
-        if (doc.id.toLowerCase().contains(query.toLowerCase()))
+        if (doc.id.toLowerCase().contains(query.toLowerCase()) ||
+            doc
+                .data()['phoneNumber']
+                .toLowerCase()
+                .contains(query.toLowerCase()))
           vendors.add(Vendor.fromJson(doc.data(), doc.id));
       });
     }
