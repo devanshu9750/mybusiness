@@ -11,18 +11,23 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  String _code = '', _name = '', _description = '', _cp = '', _sp = '';
+  String _code = '',
+      _name = '',
+      _description = '',
+      _cp = '',
+      _sp = '',
+      _quantity = '';
 
   _addProduct() {
     if (_code.isNotBlank) {
       Components.showLoading(context);
       Product product = Product(
-        code: _code,
-        cp: int.parse((_cp.isNotBlank) ? _cp : '0'),
-        description: _description,
-        name: _name,
-        sp: int.parse((_sp.isNotBlank) ? _sp : '0'),
-      );
+          code: _code,
+          cp: int.parse((_cp.isNotBlank) ? _cp : '0'),
+          description: _description,
+          name: _name,
+          sp: int.parse((_sp.isNotBlank) ? _sp : '0'),
+          quantity: int.parse((_quantity.isNotBlank) ? _quantity : '0'));
       FirebaseFirestore.instance
           .collection('products')
           .doc(_code)
@@ -112,6 +117,23 @@ class _AddProductState extends State<AddProduct> {
             borderType: VxTextFieldBorderType.roundLine,
             onChanged: (value) => _sp = value.trim(),
             hint: "Selling Price",
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          "Quantity".text.size(16).make(),
+          SizedBox(
+            height: 10,
+          ),
+          VxTextField(
+            keyboardType: TextInputType.number,
+            borderRadius: 10,
+            borderType: VxTextFieldBorderType.roundLine,
+            onChanged: (value) => _quantity = value.trim(),
+            hint: "Quantity",
+          ),
+          SizedBox(
+            height: 20,
           )
         ]).scrollVertical().pOnly(left: 15, top: 15, right: 15));
   }

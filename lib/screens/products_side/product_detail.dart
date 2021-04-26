@@ -16,7 +16,12 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> {
   bool _edit = false;
-  String _code = '', _name = '', _description = '', _cp = '', _sp = '';
+  String _code = '',
+      _name = '',
+      _description = '',
+      _cp = '',
+      _sp = '',
+      _quantity = '';
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,10 @@ class _ProductDetailState extends State<ProductDetail> {
                               cp: _cp.isNotBlank ? int.parse(_cp) : 0,
                               description: _description,
                               name: _name,
-                              sp: _sp.isNotBlank ? int.parse(_sp) : 0);
+                              sp: _sp.isNotBlank ? int.parse(_sp) : 0,
+                              quantity: _quantity.isNotBlank
+                                  ? int.parse(_quantity)
+                                  : 0);
                           FirebaseFirestore.instance
                               .collection('products')
                               .doc(widget.productDocId)
@@ -99,6 +107,7 @@ class _ProductDetailState extends State<ProductDetail> {
             _description = product.description;
             _cp = product.cp.toString();
             _sp = product.sp.toString();
+            _quantity = product.quantity.toString();
 
             return VStack([
               "Code *".text.size(16).make(),
@@ -181,7 +190,27 @@ class _ProductDetailState extends State<ProductDetail> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              "Quantity".text.size(16).make(),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                initialValue: _quantity,
+                enabled: _edit,
+                onChanged: (value) => _quantity = value.trim(),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
             ]).scrollVertical().pOnly(left: 15, right: 15, top: 15);
           }
           return Center(
