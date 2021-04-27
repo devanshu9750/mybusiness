@@ -5,6 +5,7 @@ import 'package:mybusiness/screens/clients_side/clients_screen.dart';
 import 'package:mybusiness/screens/dashboard_side/dashboard_screen.dart';
 import 'package:mybusiness/screens/products_side/add_product.dart';
 import 'package:mybusiness/screens/products_side/products_screen.dart';
+import 'package:mybusiness/screens/reports_side/reports_screen.dart';
 import 'package:mybusiness/screens/search.dart';
 import 'package:mybusiness/screens/vendors_side/add_vendor.dart';
 import 'package:mybusiness/screens/vendors_side/vendors_screen.dart';
@@ -18,17 +19,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<String> _moduleTitles = [
     'Dashboard',
+    'Reports',
     'Clients',
     'Vendors',
-    'Products'
+    'Products',
   ];
   final List<Widget> _moduleWidgets = [
     DashboardScreen(),
+    ReportsScreen(),
     ClientsScreen(),
     VendorScreen(),
     ProductsScreen()
   ];
-  int _index = 0;
+  int _index = 1;
 
   Widget get _drawer => Drawer(
         child: SafeArea(
@@ -46,19 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               leading: Icon(Icons.dashboard),
               title: "Dashboard".text.size(16).make(),
-              // trailing: IconButton(
-              //     icon: Icon(Icons.add_circle_outline),
-              //     onPressed: () {
-              //       context.pop();
-              //       setState(() {
-              //         _index = 0;
-              //       });
-              //       context.push((context) => AddClient());
-              //     }),
             ).onInkTap(() {
               context.pop();
               setState(() {
                 _index = 0;
+              });
+            }),
+            ListTile(
+              leading: Icon(Icons.analytics),
+              title: "Reports".text.size(16).make(),
+            ).onInkTap(() {
+              context.pop();
+              setState(() {
+                _index = 1;
               });
             }),
             ListTile(
@@ -69,14 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     context.pop();
                     setState(() {
-                      _index = 1;
+                      _index = 2;
                     });
                     context.push((context) => AddClient());
                   }),
             ).onInkTap(() {
               context.pop();
               setState(() {
-                _index = 1;
+                _index = 2;
               });
             }),
             ListTile(
@@ -87,14 +90,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     context.pop();
                     setState(() {
-                      _index = 2;
+                      _index = 3;
                     });
                     context.push((context) => AddVendor());
                   }),
             ).onInkTap(() {
               context.pop();
               setState(() {
-                _index = 2;
+                _index = 3;
               });
             }),
             ListTile(
@@ -105,14 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     context.pop();
                     setState(() {
-                      _index = 3;
+                      _index = 4;
                     });
                     context.push((context) => AddProduct());
                   }),
             ).onInkTap(() {
               context.pop();
               setState(() {
-                _index = 3;
+                _index = 4;
               });
             })
           ]),
@@ -125,13 +128,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: _moduleTitles[_index].text.make(),
         centerTitle: true,
-        actions: _index == 0
+        actions: _index == 0 || _index == 1
             ? []
             : [
                 IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () {
-                      if (_index == 1)
+                      if (_index == 2)
                         FirebaseFirestore.instance
                             .collection('clients')
                             .get()
@@ -140,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           showSearch(
                               context: context, delegate: ClientSearch());
                         });
-                      else if (_index == 2)
+                      else if (_index == 3)
                         FirebaseFirestore.instance
                             .collection('vendors')
                             .get()
@@ -149,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           showSearch(
                               context: context, delegate: VendorSearch());
                         });
-                      else if (_index == 3)
+                      else if (_index == 4)
                         FirebaseFirestore.instance
                             .collection('products')
                             .get()
@@ -163,13 +166,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer: _drawer,
       body: _moduleWidgets[_index],
-      floatingActionButton: _index == 0
+      floatingActionButton: _index == 0 || _index == 1
           ? null
           : FloatingActionButton(
               onPressed: () {
-                if (_index == 1) context.push((context) => AddClient());
-                if (_index == 2) context.push((context) => AddVendor());
-                if (_index == 3) context.push((context) => AddProduct());
+                if (_index == 2) context.push((context) => AddClient());
+                if (_index == 3) context.push((context) => AddVendor());
+                if (_index == 4) context.push((context) => AddProduct());
               },
               child: Icon(Icons.add),
             ),
