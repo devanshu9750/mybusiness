@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mybusiness/models/client_model.dart';
+import 'package:mybusiness/models/personal_expense_modal.dart';
 import 'package:mybusiness/models/vendor_model.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-// * vendors add type with gst without gst (optional)
-// * Expense monthly (business)
-// * Personal Expense (withdrawal from capital)
-// * This months expense outstanding
-// * Reports - sales report, purchase report, personal expense report (format pdf or excel)
 
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VStack([
-      "Overall : ".text.size(18).semiBold.make().p(10),
+      "Overall : "
+          .text
+          .size(16)
+          .semiBold
+          .make()
+          .pOnly(left: 10, top: 10, bottom: 5),
       Card(
         child: ListTile(
           title: "Outstanding :".text.bold.make(),
@@ -47,8 +47,13 @@ class DashboardScreen extends StatelessWidget {
             },
           ),
         ),
-      ).p(10),
-      "This month :".text.semiBold.size(18).make().p(10),
+      ).p(5),
+      "This month :"
+          .text
+          .semiBold
+          .size(16)
+          .make()
+          .pOnly(top: 5, bottom: 5, left: 10),
       Card(
         child: ListTile(
           title: "Total Revenue :".text.bold.make(),
@@ -80,7 +85,7 @@ class DashboardScreen extends StatelessWidget {
             },
           ),
         ),
-      ).p(10),
+      ).p(5),
       Card(
         child: ListTile(
           title: "Total Expense :".text.bold.make(),
@@ -112,8 +117,44 @@ class DashboardScreen extends StatelessWidget {
             },
           ),
         ),
-      ).p(10),
-      "Last 30 days :".text.semiBold.size(18).make().p(10),
+      ).p(5),
+      Card(
+        child: ListTile(
+          title: "Total Personal Expense :".text.bold.make(),
+          subtitle: "This month".text.semiBold.make(),
+          trailing: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('personalexpense')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                int expense = 0;
+                snapshot.data?.docs.forEach((doc) {
+                  PersonalExpense personalExpense =
+                      PersonalExpense.fromJson(doc.data(), doc.id);
+                  if (personalExpense.time.compareTo(Timestamp.fromDate(
+                          DateTime(
+                              DateTime.now().year, DateTime.now().month, 1))) >
+                      0) expense += personalExpense.amount;
+                });
+                return '₹ -$expense'
+                    .text
+                    .bold
+                    .color(Colors.red)
+                    .size(18)
+                    .make();
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      ).p(5),
+      "Last 30 days :"
+          .text
+          .semiBold
+          .size(16)
+          .make()
+          .pOnly(top: 5, bottom: 5, left: 10),
       Card(
         child: ListTile(
           title: "Total Revenue :".text.bold.make(),
@@ -146,7 +187,7 @@ class DashboardScreen extends StatelessWidget {
             },
           ),
         ),
-      ).p(10),
+      ).p(5),
       Card(
         child: ListTile(
           title: "Total Expense :".text.bold.make(),
@@ -179,7 +220,42 @@ class DashboardScreen extends StatelessWidget {
             },
           ),
         ),
-      ).p(10)
+      ).p(5),
+      Card(
+        child: ListTile(
+          title: "Total Personal Expense :".text.bold.make(),
+          subtitle: "For last 30 days".text.semiBold.make(),
+          trailing: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('personalexpense')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                int expense = 0;
+                snapshot.data?.docs.forEach((doc) {
+                  PersonalExpense personalExpense =
+                      PersonalExpense.fromJson(doc.data(), doc.id);
+                  if (personalExpense.time.compareTo(Timestamp.fromDate(
+                          DateTime(DateTime.now().year, DateTime.now().month,
+                                  DateTime.now().day)
+                              .subtract(Duration(days: 30)))) >
+                      0) expense += personalExpense.amount;
+                });
+                return '₹ -$expense'
+                    .text
+                    .bold
+                    .color(Colors.red)
+                    .size(18)
+                    .make();
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+        ),
+      ).p(5),
+      SizedBox(
+        height: 20,
+      )
     ]).scrollVertical();
   }
 }
