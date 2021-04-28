@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mybusiness/models/vendor_model.dart';
-import 'package:mybusiness/screens/vendors_side/add_vendor.dart';
 import 'package:mybusiness/screens/vendors_side/vendor_transactions.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +10,10 @@ class VendorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('vendors').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('vendors')
+          .orderBy('editedAt', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           List<Vendor> clients = [];
@@ -48,7 +50,7 @@ class VendorScreen extends StatelessWidget {
                       .make(),
                   title: clients[index].name.text.semiBold.size(16).make(),
                   subtitle:
-                      "${DateFormat().format(clients[index].createdAt.toDate())}"
+                      "${DateFormat().format(clients[index].editedAt.toDate())}"
                           .text
                           .semiBold
                           .make(),

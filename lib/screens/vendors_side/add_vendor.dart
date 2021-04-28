@@ -25,7 +25,8 @@ class _AddVendorState extends State<AddVendor> {
           name: _name,
           phoneNumber: _phoneNumber,
           transactions: [],
-          createdAt: Timestamp.now());
+          createdAt: Timestamp.now(),
+          editedAt: Timestamp.now());
       Components.showLoading(context);
       FirebaseFirestore.instance
           .collection('vendors')

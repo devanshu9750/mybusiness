@@ -7,6 +7,7 @@ class Vendor {
   String email;
   List transactions;
   Timestamp createdAt;
+  Timestamp editedAt;
 
   Vendor(
       {required this.address,
@@ -14,7 +15,8 @@ class Vendor {
       required this.name,
       required this.phoneNumber,
       required this.transactions,
-      required this.createdAt});
+      required this.createdAt,
+      required this.editedAt});
 
   Vendor.fromJson(Map<String, dynamic> json, String id)
       : name = id,
@@ -22,7 +24,8 @@ class Vendor {
         address = json['address'],
         email = json['email'],
         transactions = json['transactions'],
-        createdAt = json['createdAt'];
+        createdAt = json['createdAt'],
+        editedAt = json['editedAt'];
 
   Map<String, dynamic> get toJson => {
         'name': name,
@@ -30,6 +33,7 @@ class Vendor {
         'address': address,
         'email': email,
         'transactions': transactions,
-        'createdAt': createdAt
+        'createdAt': createdAt,
+        'editedAt': editedAt
       };
 }

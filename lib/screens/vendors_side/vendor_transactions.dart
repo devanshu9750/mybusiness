@@ -42,7 +42,10 @@ class VendorTransactions extends StatelessWidget {
                     FirebaseFirestore.instance
                         .collection('vendors')
                         .doc(vendorDocId)
-                        .update({'transactions': transactions});
+                        .update({
+                      'transactions': transactions,
+                      'editedAt': Timestamp.now()
+                    });
                   });
                 context.pop();
                 context.pop();
@@ -203,7 +206,9 @@ class VendorTransactions extends StatelessWidget {
                                                           .doc(vendorDocId)
                                                           .update({
                                                         'transactions':
-                                                            vendor.transactions
+                                                            vendor.transactions,
+                                                        'editedAt':
+                                                            Timestamp.now()
                                                       });
                                                       context.pop();
                                                       context.pop();
