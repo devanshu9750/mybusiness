@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ProductsScreen(),
     PersonalExpensesScreen()
   ];
-  int _index = 5;
+  int _index = 0;
 
   Widget get _drawer => Drawer(
         child: SafeArea(
@@ -173,6 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           VxTextField(
                             borderType: VxTextFieldBorderType.roundLine,
                             borderRadius: 10,
+                            hint: 'Amount',
                             onChanged: (value) => _amount = value.trim(),
                             keyboardType: TextInputType.number,
                           ),
@@ -186,6 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           VxTextField(
                             borderType: VxTextFieldBorderType.roundLine,
                             borderRadius: 10,
+                            hint: 'Message',
                             onChanged: (value) => _message = value.trim(),
                           ),
                         ]),
