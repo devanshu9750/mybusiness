@@ -55,8 +55,9 @@ class ReportsScreen extends StatelessWidget {
 
                       for (Client client in clients) {
                         client.transactions.forEach((element) {
-                          if ((element['time'] as Timestamp).compareTo(
-                                  Timestamp.fromDate(DateTime(
+                          if (element['credit']) if ((element['time']
+                                      as Timestamp)
+                                  .compareTo(Timestamp.fromDate(DateTime(
                                       DateTime.now().year,
                                       DateTime.now().month,
                                       1))) >
@@ -68,8 +69,9 @@ class ReportsScreen extends StatelessWidget {
 
                       for (Vendor vendor in vendors) {
                         vendor.transactions.forEach((element) {
-                          if ((element['time'] as Timestamp).compareTo(
-                                  Timestamp.fromDate(DateTime(
+                          if (!element['credit']) if ((element['time']
+                                      as Timestamp)
+                                  .compareTo(Timestamp.fromDate(DateTime(
                                       DateTime.now().year,
                                       DateTime.now().month,
                                       1))) >
