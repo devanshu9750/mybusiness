@@ -9,8 +9,10 @@ class PersonalExpensesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream:
-          FirebaseFirestore.instance.collection('personalexpense').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('personalexpense')
+          .orderBy('time', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           List<PersonalExpense> personalexpenses = [];
