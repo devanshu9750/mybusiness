@@ -73,6 +73,7 @@ class PersonalExpensesScreen extends StatelessWidget {
                                 ),
                                 TextButton(
                                   onPressed: () async {
+                                    if (!_amount.isNotBlank) return;
                                     await FirebaseFirestore.instance
                                         .collection('personalexpense')
                                         .doc(personalexpenses[index].id)
@@ -92,6 +93,7 @@ class PersonalExpensesScreen extends StatelessWidget {
                                   height: 10,
                                 ),
                                 VxTextField(
+                                  value: _amount,
                                   hint: "Amount",
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) => _amount = value.trim(),
@@ -106,8 +108,9 @@ class PersonalExpensesScreen extends StatelessWidget {
                                   height: 10,
                                 ),
                                 VxTextField(
+                                  value: _message,
                                   hint: 'Message',
-                                  onChanged: (value) => _message = value,
+                                  onChanged: (value) => _message = value.trim(),
                                   borderType: VxTextFieldBorderType.roundLine,
                                   borderRadius: 10,
                                 )
