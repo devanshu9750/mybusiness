@@ -1,8 +1,12 @@
+import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mybusiness/models/personal_expense_modal.dart';
 import 'package:mybusiness/screens/clients_side/add_client.dart';
 import 'package:mybusiness/screens/clients_side/clients_screen.dart';
+import 'package:mybusiness/screens/components.dart';
 import 'package:mybusiness/screens/dashboard_side/dashboard_screen.dart';
+import 'package:mybusiness/screens/personal_expense/personal_expenses_screen.dart';
 import 'package:mybusiness/screens/products_side/add_product.dart';
 import 'package:mybusiness/screens/products_side/products_screen.dart';
 import 'package:mybusiness/screens/reports_side/reports_screen.dart';
@@ -23,15 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
     'Clients',
     'Vendors',
     'Products',
+    'Personal Expense'
   ];
   final List<Widget> _moduleWidgets = [
     DashboardScreen(),
     ReportsScreen(),
     ClientsScreen(),
     VendorScreen(),
-    ProductsScreen()
+    ProductsScreen(),
+    PersonalExpensesScreen()
   ];
-  int _index = 1;
+  int _index = 5;
 
   Widget get _drawer => Drawer(
         child: SafeArea(
@@ -116,6 +122,80 @@ class _HomeScreenState extends State<HomeScreen> {
               context.pop();
               setState(() {
                 _index = 4;
+              });
+            }),
+            ListTile(
+              leading: Icon(Icons.monetization_on_sharp),
+              title: "Personal Expenses".text.size(16).make(),
+              trailing: IconButton(
+                  icon: Icon(Icons.add_circle_outline),
+                  onPressed: () {
+                    context.pop();
+                    setState(() {
+                      _index = 5;
+                    });
+                    String _amount = '', _message = '';
+                    showModal(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Add Personal Expense"),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                context.pop();
+                              },
+                              child: Text("Cancel")),
+                          TextButton(
+                              onPressed: () async {
+                                if (_amount.isNotBlank) {
+                                  PersonalExpense personalExpense =
+                                      PersonalExpense(
+                                          amount: int.parse(_amount),
+                                          message: _message,
+                                          time: Timestamp.now(),
+                                          id: '');
+                                  Components.showLoading(context);
+                                  await FirebaseFirestore.instance
+                                      .collection('personalexpense')
+                                      .doc()
+                                      .set(personalExpense.toJson);
+                                  context.pop();
+                                  context.pop();
+                                }
+                              },
+                              child: Text("Confirm")),
+                        ],
+                        content: VStack([
+                          Text('Amount *'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          VxTextField(
+                            borderType: VxTextFieldBorderType.roundLine,
+                            borderRadius: 10,
+                            onChanged: (value) => _amount = value.trim(),
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text("Message (optional)"),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          VxTextField(
+                            borderType: VxTextFieldBorderType.roundLine,
+                            borderRadius: 10,
+                            onChanged: (value) => _message = value.trim(),
+                          ),
+                        ]),
+                      ),
+                    );
+                  }),
+            ).onInkTap(() {
+              context.pop();
+              setState(() {
+                _index = 5;
               });
             })
           ]),
