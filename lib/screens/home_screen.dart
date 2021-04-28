@@ -255,6 +255,67 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (_index == 2) context.push((context) => AddClient());
                 if (_index == 3) context.push((context) => AddVendor());
                 if (_index == 4) context.push((context) => AddProduct());
+                if (_index == 5) {
+                  String _amount = '', _message = '';
+                  showModal(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text("Add Personal Expense"),
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              context.pop();
+                            },
+                            child: Text("Cancel")),
+                        TextButton(
+                            onPressed: () async {
+                              if (_amount.isNotBlank) {
+                                PersonalExpense personalExpense =
+                                    PersonalExpense(
+                                        amount: int.parse(_amount),
+                                        message: _message,
+                                        time: Timestamp.now(),
+                                        id: '');
+                                Components.showLoading(context);
+                                await FirebaseFirestore.instance
+                                    .collection('personalexpense')
+                                    .doc()
+                                    .set(personalExpense.toJson);
+                                context.pop();
+                                context.pop();
+                              }
+                            },
+                            child: Text("Confirm")),
+                      ],
+                      content: VStack([
+                        Text('Amount *'),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        VxTextField(
+                          borderType: VxTextFieldBorderType.roundLine,
+                          borderRadius: 10,
+                          hint: 'Amount',
+                          onChanged: (value) => _amount = value.trim(),
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Message (optional)"),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        VxTextField(
+                          borderType: VxTextFieldBorderType.roundLine,
+                          borderRadius: 10,
+                          hint: 'Message',
+                          onChanged: (value) => _message = value.trim(),
+                        ),
+                      ]),
+                    ),
+                  );
+                }
               },
               child: Icon(Icons.add),
             ),
