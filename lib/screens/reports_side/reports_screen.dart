@@ -98,6 +98,7 @@ class ReportsScreen extends StatelessWidget {
                           title: Text(
                             transactions[index].keys.toList()[0],
                             style: TextStyle(
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: transactions[index][transactions[index]
                                         .keys
@@ -108,6 +109,7 @@ class ReportsScreen extends StatelessWidget {
                           trailing: Text(
                             "₹ ${transactions[index][transactions[index].keys.toList()[0]]['credit'] ? '+' : '-'} ${transactions[index][transactions[index].keys.toList()[0]]['amount'].toString()}",
                             style: TextStyle(
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: transactions[index][transactions[index]
                                         .keys
