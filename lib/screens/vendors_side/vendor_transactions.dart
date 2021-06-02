@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mybusiness/models/vendor_model.dart';
 import 'package:mybusiness/screens/components.dart';
+import 'package:mybusiness/screens/vendors_side/edit_vendor.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
 
@@ -84,10 +86,25 @@ class VendorTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String phoneNumber = '';
     return Scaffold(
       appBar: AppBar(
         title: vendorDocId.text.make(),
-        actions: [IconButton(icon: Icon(Icons.edit), onPressed: () {})],
+        actions: [
+          IconButton(
+              icon: Icon(Icons.call),
+              onPressed: () {
+                if (phoneNumber.isNotBlank)
+                  launch("tel:$phoneNumber");
+                else
+                  Fluttertoast.showToast(msg: "No phone number found");
+              }),
+          IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                context.push((context) => EditVendor(vendorDocId: vendorDocId));
+              })
+        ],
       ),
       body: ZStack([
         StreamBuilder<DocumentSnapshot>(
@@ -99,6 +116,7 @@ class VendorTransactions extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.active) {
               Vendor vendor = Vendor.fromJson(
                   snapshot.data?.data() ?? {}, snapshot.data?.id ?? '');
+              phoneNumber = vendor.phoneNumber;
               return ListView.separated(
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => Divider(
