@@ -5,6 +5,7 @@ import 'package:mybusiness/models/product_model.dart';
 import 'package:mybusiness/models/vendor_model.dart';
 import 'package:mybusiness/screens/clients_side/client_transactions.dart';
 import 'package:mybusiness/screens/products_side/product_detail.dart';
+import 'package:mybusiness/screens/vendors_side/vendor_transactions.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:intl/intl.dart';
 
@@ -219,7 +220,7 @@ class VendorSearch extends SearchDelegate<String> {
               .make(),
         ).onInkTap(() {
           context.nextReplacementPage(
-              ClientTransactions(clientDocId: vendors[index].name));
+              VendorTransactions(vendorDocId: vendors[index].name));
         });
       },
     ).pOnly(top: 5);
@@ -273,7 +274,7 @@ class VendorSearch extends SearchDelegate<String> {
               .make(),
         ).onInkTap(() {
           context.nextReplacementPage(
-              ClientTransactions(clientDocId: vendors[index].name));
+              VendorTransactions(vendorDocId: vendors[index].name));
         });
       },
     ).pOnly(top: 5);
